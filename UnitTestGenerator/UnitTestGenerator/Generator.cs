@@ -1,4 +1,6 @@
-﻿using System;
+﻿
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,6 +28,8 @@ namespace UnitTestGenerator
             {
                 throw new Exception(string.Format("Error : json is null or empty"));
             }
+            JsonParser parser = new JsonParser();
+            var dic = parser.Parse(json);
             Type type = typeof(T);
 
             return null;
