@@ -66,12 +66,6 @@
   <ItemGroup>
     <Folder Include="Output\" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\..\BP\BeProduct.Core\BeProduct.Core\BeProduct.Core.csproj">
-      <Project>{2fdf5a9f-41c5-49e7-8ffd-dfa5afcfd120}</Project>
-      <Name>BeProduct.Core</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

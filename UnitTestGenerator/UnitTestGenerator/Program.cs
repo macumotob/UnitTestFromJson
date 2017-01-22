@@ -23,11 +23,7 @@ namespace UnitTestGenerator
                 tasks.Parse(dic);
                 return;
             }
-            string jsonFile = ConfigurationManager.AppSettings["jsonFileLocation"];
-            Console.WriteLine("Json Source File : {0}", jsonFile);
-
-            Generator generator = new Generator();
-            string result = generator.GenerateFromFile(jsonFile, typeof(BeProduct.Core.DataModel.Folder.Folder));
+            Console.WriteLine("ERROR! FILE : " + file + " NOT FOUND!!!");
 
             Console.WriteLine("\r\n\tpress Q to exit ...");
             while (Console.ReadKey().Key != ConsoleKey.Q) ;

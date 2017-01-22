@@ -1,6 +1,6 @@
 ﻿{
     "Assemblies": [
-        "C:\devs\UnitTestFromJson\UnitTestGenerator\UnitTestGenerator\bin\Debug\BeProduct.Core.dll"
+      "C:\BP\MongoRepository\MongoRepository\bin\Debug\BeProduct.Core.dll"
     ],
     "OutPutFolder": "{$App}\Output",
     "NameSpace" : "MyNamespace",
