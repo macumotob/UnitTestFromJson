@@ -9,11 +9,12 @@ using System.Threading.Tasks;
 
 namespace UnitTestGenerator
 {
-    public class Generator<T>
+    public class Generator
     {
 
+        public static Generator Instance = new Generator();
         Module _module;
-        public string GenerateFromFile(string jsonFile)
+        public string GenerateFromFile(string jsonFile, Type type)
         {
 
             if (!System.IO.File.Exists(jsonFile))
@@ -22,10 +23,9 @@ namespace UnitTestGenerator
             }
             string json = System.IO.File.ReadAllText(jsonFile, Encoding.UTF8);
 
-            return Generate(json);
+            return Generate(json, type);
         }
-
-        public string Generate(string json)
+        public string Generate(string json, Type type)
         {
             if (string.IsNullOrEmpty(json))
             {
@@ -33,12 +33,11 @@ namespace UnitTestGenerator
             }
             JsonParser parser = new JsonParser();
             var dic = parser.Parse(json);
-            
-            Type type = typeof(T);
+
             _module = type.Module;
             string s = string.Format("{0} document = ", type.FullName);
 
-            s += _generateCode(dic,type);
+            s += _generateCode(dic, type);
 
             //foreach (var pi in type.GetProperties())
             //{
@@ -48,6 +47,30 @@ namespace UnitTestGenerator
 
             return s + "\r\n;\r\n";
         }
+
+        //public string Generate(string json)
+        //{
+        //    if (string.IsNullOrEmpty(json))
+        //    {
+        //        throw new Exception(string.Format("Error : json is null or empty"));
+        //    }
+        //    JsonParser parser = new JsonParser();
+        //    var dic = parser.Parse(json);
+            
+        //    Type type = typeof(T);
+        //    _module = type.Module;
+        //    string s = string.Format("{0} document = ", type.FullName);
+
+        //    s += _generateCode(dic,type);
+
+        //    //foreach (var pi in type.GetProperties())
+        //    //{
+        //    //    string name = pi.Name;
+        //    //    string type_name = pi.PropertyType.Name;
+        //    //}
+
+        //    return s + "\r\n;\r\n";
+        //}
         private string _begin(int level)
         {
             string s = "";

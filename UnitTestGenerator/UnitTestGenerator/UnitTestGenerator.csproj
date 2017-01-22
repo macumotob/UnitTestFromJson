@@ -56,7 +56,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="data\folder1.json" />
+    <None Include="data\folder1.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="data\generatorTask.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

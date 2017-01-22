@@ -3,11 +3,12 @@
         "C:\devs\UnitTestFromJson\UnitTestGenerator\UnitTestGenerator\bin\Debug\BeProduct.Core.dll"
     ],
     "OutPutFolder": "{$App}\Output",
-    "Namespace" : "MyNamespace",
+    "NameSpace" : "MyNamespace",
     "Tasks": [
         {
             "TypeName": "BeProduct.Core.DataModel.Folder.Folder",
             "OutputFile": "TestFolder.cs",
+            "JsonFile" : "data\folder1.json",
             "BreakIfExists" :  false
         }
     ]

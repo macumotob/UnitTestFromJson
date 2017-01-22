@@ -12,7 +12,7 @@ namespace UnitTestGenerator
     {
         public string TypeName { get; set; }
         public string OutputFile { get; set; }
-        public string Namespace { get; set; }
+        public string JsonFile { get; set; }
         public bool BreakIfExists { get; set; }
         public void Parse(Dictionary<string, object> dic)
         {
@@ -36,12 +36,15 @@ namespace UnitTestGenerator
         private List<object> _assemblies { get; set; }
         private List<Assembly> _modules = new List<Assembly>();
         public string OutPutFolder { get; set; }
+        public string NameSpace { get; set; }
+
         public void Parse(Dictionary<string, object> dic)
         {
             _assemblies = (List<object>)dic["Assemblies"];
+            OutPutFolder = (string)dic["OutPutFolder"];
             _LoadModules();
 
-            OutPutFolder = (string)dic["OutPutFolder"];
+            NameSpace = (string)dic["NameSpace"];
             OutPutFolder = OutPutFolder.Replace("{$App}", AppDomain.CurrentDomain.BaseDirectory);
             if (!Directory.Exists(OutPutFolder))
             {
@@ -85,6 +88,12 @@ namespace UnitTestGenerator
             {
                 return;
             }
+            string sourceFile = AppDomain.CurrentDomain.BaseDirectory + "\\" + task.JsonFile;
+            if (!File.Exists(sourceFile))
+            {
+                return;
+            }
+            
             StreamWriter sw = new StreamWriter(output);
 
             if(type != null)
@@ -97,7 +106,7 @@ namespace UnitTestGenerator
                 sw.WriteLine("using System.Text;");
                 sw.WriteLine("using System.Threading.Tasks;");
                 sw.WriteLine();
-                sw.WriteLine("namespace " + task.Namespace);
+                sw.WriteLine("namespace " + NameSpace);
                 sw.WriteLine("{");
                 sw.WriteLine("[TestClass]");
                 sw.WriteLine("public class Test" + type.Name);
@@ -105,6 +114,9 @@ namespace UnitTestGenerator
                 sw.WriteLine(" public " + type.FullName + " CreateInstance()");
                 sw.WriteLine("{");
 
+
+                string body = Generator.Instance.GenerateFromFile(sourceFile, type);
+                sw.Write(body);
                 sw.WriteLine("}");
                 sw.WriteLine("} //end of class");
                 sw.WriteLine("} //end of namespace");
