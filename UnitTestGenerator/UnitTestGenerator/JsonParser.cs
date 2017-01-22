@@ -154,7 +154,7 @@ namespace UnitTestGenerator
             }
             throw new NotImplementedException();
         }
-        public Dictionary<string, object> Parse(string s)
+        public object Parse(string s)
         {
             Dictionary<string, object> root = null;
             
@@ -170,29 +170,12 @@ namespace UnitTestGenerator
                     case '{':
                         root = (Dictionary < string, object> )_readObject(s,ref i);
                          break;
-                    //case '"':
-                    //    name = _readName(s, ref i);
-                    //    current.Add(name, null);
-                    //    break;
-                    //case ':':
-                    //    i++;
-                    //    _skipws(s, ref i);
-                    //    value = _readValue(s, ref i);
-                    //    current[name] = value;
-                    //    break;
-                    //case '}':
-                    //    break;
                     case '[':
                         value = _readArray(s, ref i);
 
                         break;
-                    //case ']':
-                    //    break;
-                    //case ',':
-                    //    i++;
-                        //break;
                     default:
-                        break;
+                        throw new NotImplementedException();
 
                 }
             }
