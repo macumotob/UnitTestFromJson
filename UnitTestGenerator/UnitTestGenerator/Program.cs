@@ -11,14 +11,26 @@ namespace UnitTestGenerator
     {
         static void Main(string[] args)
         {
-         string jsonFile = ConfigurationManager.AppSettings["jsonFileLocation"];
+            string file = AppDomain.CurrentDomain.BaseDirectory + "\\data\\generatorTask.json";
+
+            if (System.IO.File.Exists(file))
+            {
+                string json = System.IO.File.ReadAllText(file, Encoding.UTF8);
+
+                JsonParser parser = new JsonParser();
+                Dictionary<string, object> dic = parser.Parse(json);
+                GeneratorTasks tasks = new GeneratorTasks();
+                tasks.Parse(dic);
+                return;
+            }
+            string jsonFile = ConfigurationManager.AppSettings["jsonFileLocation"];
             Console.WriteLine("Json Source File : {0}", jsonFile);
 
             Generator<BeProduct.Core.DataModel.Folder.Folder> generator = new Generator<BeProduct.Core.DataModel.Folder.Folder>();
-           string result =  generator.GenerateFromFile(jsonFile);
+            string result = generator.GenerateFromFile(jsonFile);
 
             Console.WriteLine("\r\n\tpress Q to exit ...");
             while (Console.ReadKey().Key != ConsoleKey.Q) ;
-       }
+        }
     }
 }

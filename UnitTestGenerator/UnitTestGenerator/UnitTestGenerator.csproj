@@ -48,6 +48,7 @@
     <Compile Include="EmptyForTest.cs" />
     <Compile Include="Extenter.cs" />
     <Compile Include="Generator.cs" />
+    <Compile Include="GeneratorTask.cs" />
     <Compile Include="JsonParser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -56,8 +57,13 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="data\folder1.json" />
+    <None Include="data\generatorTask.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Output\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\BP\BeProduct.Core\BeProduct.Core\BeProduct.Core.csproj">
       <Project>{2fdf5a9f-41c5-49e7-8ffd-dfa5afcfd120}</Project>

@@ -14,10 +14,10 @@ namespace UnitTestGenerator
             {
                 i++;
             }
-            if(i >= s.Length)
-            {
-                throw new NotImplementedException();
-            }
+            //if(i >= s.Length)
+            //{
+            //    throw new NotImplementedException();
+            //}
         }
         private string _readName(string s,ref int i )
         {
@@ -154,7 +154,7 @@ namespace UnitTestGenerator
             }
             throw new NotImplementedException();
         }
-        public object Parse(string s)
+        public Dictionary<string, object> Parse(string s)
         {
             Dictionary<string, object> root = null;
             
@@ -164,7 +164,11 @@ namespace UnitTestGenerator
             while (i < s.Length)
             {
                 _skipws(s, ref i);
-                char c = s[i];
+                if(i >= s.Length)
+                {
+                    break;
+                }
+                    char c = s[i];
                 switch (c)
                 {
                     case '{':
