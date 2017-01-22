@@ -15,7 +15,7 @@ namespace UnitTestGenerator
             Console.WriteLine("Json Source File : {0}", jsonFile);
 
             Generator<BeProduct.Core.DataModel.Folder.Folder> generator = new Generator<BeProduct.Core.DataModel.Folder.Folder>();
-            generator.GenerateFromFile(jsonFile);
+           string result =  generator.GenerateFromFile(jsonFile);
 
             Console.WriteLine("\r\n\tpress Q to exit ...");
             while (Console.ReadKey().Key != ConsoleKey.Q) ;
