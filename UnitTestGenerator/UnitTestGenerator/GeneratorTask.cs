@@ -120,11 +120,13 @@ namespace UnitTestGenerator
                 sw.WriteLine("using System.Linq;");
                 sw.WriteLine("using System.Text;");
                 sw.WriteLine("using System.Threading.Tasks;");
+                sw.WriteLine("using Microsoft.VisualStudio.TestTools.UnitTesting;");
+
                 sw.WriteLine();
                 sw.WriteLine("namespace " + NameSpace);
                 sw.WriteLine("{");
                 sw.WriteLine("[TestClass]");
-                sw.WriteLine("public class Test" + type.Name);
+                sw.WriteLine("public partial class Test" + type.Name);
                 sw.WriteLine("{");
                 sw.WriteLine(" public " + type.FullName + " CreateInstance()");
                 sw.WriteLine("{");
@@ -132,6 +134,7 @@ namespace UnitTestGenerator
 
                 string body = Generator.Instance.GenerateFromFile(sourceFile, type);
                 sw.Write(body);
+                sw.WriteLine("; return document;");
                 sw.WriteLine("}");
                 sw.WriteLine("} //end of class");
                 sw.WriteLine("} //end of namespace");

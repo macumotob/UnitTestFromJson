@@ -45,7 +45,7 @@ namespace UnitTestGenerator
             //    string type_name = pi.PropertyType.Name;
             //}
 
-            return s + "\r\n;\r\n";
+            return s + "\r\n\r\n";
         }
 
         //public string Generate(string json)

@@ -2,12 +2,12 @@
     "Assemblies": [
       "C:\BP\MongoRepository\MongoRepository\bin\Debug\BeProduct.Core.dll"
     ],
-    "OutPutFolder": "{$App}\Output",
-    "NameSpace" : "MyNamespace",
+    "OutPutFolder": "C:\devs\UnitTestFromJson\UnitTestGenerator\DemoGenerator",
+    "NameSpace" : "DemoGenerator",
     "Tasks": [
         {
             "TypeName": "BeProduct.Core.DataModel.Folder.Folder",
-            "OutputFile": "TestFolder.cs",
+            "OutputFile": "TestFolderPart.cs",
             "JsonFile" : "data\folder1.json",
             "BreakIfExists" :  false
         }
