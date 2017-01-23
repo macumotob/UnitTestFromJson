@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Creator.cs" />
     <Compile Include="EmptyForTest.cs" />
     <Compile Include="Extenter.cs" />
     <Compile Include="Generator.cs" />

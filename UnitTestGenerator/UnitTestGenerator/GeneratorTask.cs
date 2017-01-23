@@ -34,7 +34,22 @@ namespace UnitTestGenerator
     public class GeneratorTasks
     {
         private List<object> _assemblies { get; set; }
-        private List<Assembly> _modules = new List<Assembly>();
+        private List<Assembly> _modules;
+        public List<Assembly> Modules
+        {
+            get
+            {
+                if(_modules == null)
+                {
+                    _modules =  new List<Assembly>();
+                }
+                return _modules;
+            }
+            set
+            {
+                _modules = value;
+            }
+        }
         public string OutPutFolder { get; set; }
         public string NameSpace { get; set; }
 
@@ -58,7 +73,7 @@ namespace UnitTestGenerator
             foreach(var file in _assemblies)
             {
                 Assembly ass = Assembly.LoadFile(file.ToString());
-                _modules.Add(ass);
+                Modules.Add(ass);
             }
         }
         private void _LoadTasks(List<object> list)

@@ -19,6 +19,10 @@ namespace UnitTestGenerator
 
                 JsonParser parser = new JsonParser();
                 Dictionary<string, object> dic = parser.Parse(json);
+
+               // GeneratorTasks x = (GeneratorTasks )Creator.Instance.Create(typeof(GeneratorTasks), dic);
+              //  GeneratorTasks x2 = (GeneratorTasks)Creator.Instance.Create( AppDomain.CurrentDomain.BaseDirectory + "\\UnitTestGenerator.exe", "UnitTestGenerator.GeneratorTasks", dic);
+
                 GeneratorTasks tasks = new GeneratorTasks();
                 tasks.Parse(dic);
                 return;
