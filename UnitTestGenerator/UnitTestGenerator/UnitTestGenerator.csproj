@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="CodeItem.cs" />
     <Compile Include="CodeItems.cs" />
+    <Compile Include="CodeListInfo.cs" />
     <Compile Include="Creator.cs" />
     <Compile Include="EmptyForTest.cs" />
     <Compile Include="Extenter.cs" />
