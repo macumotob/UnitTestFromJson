@@ -9,37 +9,36 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DemoGenerator
 {
+public partial class TestFolder
+{
+ public BeProduct.Core.DataModel.Folder.Folder CreateInstance()
+{
+BeProduct.Core.DataModel.Folder.Folder document =  new BeProduct.Core.DataModel.Folder.Folder()
+{
 
-    public partial class TestFolder
-    {
-        public BeProduct.Core.DataModel.Folder.Folder CreateInstance()
-        {
-            BeProduct.Core.DataModel.Folder.Folder document = new BeProduct.Core.DataModel.Folder.Folder()
-            {
+Id = "193ad45b-8563-4f46-9d8f-42612891bf5c",
+CompanyId = "3c9d1526-4a98-4d13-8c36-c0445e0aa483",
+MasterFolder = BeProduct.Core.DataModel.Enums.FolderType.Color,
+FolderType = "Rainbow",
+FolderDescription = "1-10",
+CreatedBy =  new BeProduct.Core.DataModel.Info.UserInfo()
+{
 
-                Id = "193ad45b-8563-4f46-9d8f-42612891bf5c",
-                CompanyId = "3c9d1526-4a98-4d13-8c36-c0445e0aa483",
-                MasterFolder = BeProduct.Core.DataModel.Enums.FolderType.Color,
-                FolderType = "Rainbow",
-                FolderDescription = "1-10",
-                CreatedBy = new BeProduct.Core.DataModel.Info.UserInfo()
-                {
+user_id = "a3fd24ce-0ae1-423d-8a58-e4da6829ecb0",
+user_name = "fastex"
+}
+,
+CreatedAt = "2016-03-21T10:05:02.2526184+00:00",
+ModifiedBy =  new BeProduct.Core.DataModel.Info.UserInfo()
+{
 
-                    user_id = "a3fd24ce-0ae1-423d-8a58-e4da6829ecb0",
-                    user_name = "fastex"
-                }
-            ,
-                CreatedAt = "2016-03-21T10:05:02.2526184+00:00",
-                ModifiedBy = new BeProduct.Core.DataModel.Info.UserInfo()
-                {
-
-                    user_id = "62a806f8-7296-4408-9969-4b5e16d95f90",
-                    user_name = "imvdesign"
-                }
-            ,
-                ModifiedAt = "2016-06-01T12:12:03.4358839+00:00",
-                Active = true,
-                Schema = new List<BeProduct.Core.DataModel.Folder.FolderField>()
+user_id = "62a806f8-7296-4408-9969-4b5e16d95f90",
+user_name = "imvdesign"
+}
+,
+ModifiedAt = "2016-06-01T12:12:03.4358839+00:00",
+Active = true,
+Schema =  new List<BeProduct.Core.DataModel.Folder.FolderField>()
 {
  new BeProduct.Core.DataModel.Folder.FolderField()
 {
@@ -61,13 +60,13 @@ Properties =  new Dictionary<System.String,System.Object>()
 }
 
 }
-            ,
-                Custom = new List<BeProduct.Core.DataModel.Folder.FolderField>()
-                {
+,
+Custom =  new List<BeProduct.Core.DataModel.Folder.FolderField>()
+{
 
-                }
-            ,
-                System = new List<BeProduct.Core.DataModel.Folder.FolderField>()
+}
+,
+System =  new List<BeProduct.Core.DataModel.Folder.FolderField>()
 {
  new BeProduct.Core.DataModel.Folder.FolderField()
 {
@@ -189,17 +188,17 @@ Properties =  new Dictionary<System.String,System.Object>()
 }
 
 }
-            ,
-                Control = new BeProduct.Core.DataModel.Controls.SchemaControl()
-                {
+,
+Control =  new BeProduct.Core.DataModel.Controls.SchemaControl()
+{
 
-                    // element Form not found,
-                    // element Grid not found,
-                    // element Search not found,
-                    // element List not found
-                }
-            ,
-                permissions = new List<BeProduct.Core.DataModel.Permissions.UserRole>()
+ // element Form not found,
+ // element Grid not found,
+ // element Search not found,
+ // element List not found
+}
+,
+permissions =  new List<BeProduct.Core.DataModel.Permissions.UserRole>()
 {
  new BeProduct.Core.DataModel.Permissions.UserRole()
 {
@@ -226,7 +225,7 @@ full_name = "JohnDoe",
 Title = "null",
 Active = true,
 order = 0
-
+        
 }
 , new BeProduct.Core.DataModel.Permissions.UserRole()
 {
@@ -253,7 +252,7 @@ full_name = "UncleDolan",
 Title = "lll",
 Active = true,
 order = 5
-
+        
 }
 , new BeProduct.Core.DataModel.Permissions.UserRole()
 {
@@ -280,7 +279,7 @@ full_name = "OleksiyVoynov",
 Title = "111",
 Active = true,
 order = 4
-
+        
 }
 , new BeProduct.Core.DataModel.Permissions.UserRole()
 {
@@ -307,7 +306,7 @@ full_name = "IgorMorozov",
 Title = "null",
 Active = true,
 order = 4
-
+        
 }
 , new BeProduct.Core.DataModel.Permissions.UserRole()
 {
@@ -334,13 +333,15 @@ full_name = "MichaelTomara",
 Title = "jjj",
 Active = true,
 order = 5
-
+        
 }
 
 }
 
-            }
-            ; return document;
-        }
-    } //end of class
+}
+
+
+; return document;
+}
+} //end of class
 } //end of namespace

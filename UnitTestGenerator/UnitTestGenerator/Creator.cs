@@ -53,12 +53,21 @@ namespace UnitTestGenerator
                                 string listName = "List<";
                                 for(int i =0;i < p.PropertyType.GenericTypeArguments.Length; i++)
                                 {
-                                    Type gp = p.PropertyType.GenericTypeArguments[i].BaseType;
+                                    Type gp = p.PropertyType.GenericTypeArguments[i];
                                     listName += (i == 0 ? "" : ",") + gp.FullName;
                                 }
                                 listName += ">";
-                                Assembly asm = Assembly.GetExecutingAssembly();
-                                AssemblyName[] asms = asm.GetReferencedAssemblies();
+
+                                Assembly [] asms = AppDomain.CurrentDomain.GetAssemblies();
+                                //Assembly asm = Assembly.GetExecutingAssembly();
+                                //Type t;// = asm.GetType("System.Collections.Generic.List`1");
+                                //t = asm.GetType(listName);
+                                for(int i = 0; i< asms.Length; i++)
+                                {
+                                   Type t = asms[i].GetType("System.Collections.Generic.List`1");
+
+                                    //t = asms[i].GetType("System.Collections.Generic.List`1");
+                                }
                                 
                             }
                         }

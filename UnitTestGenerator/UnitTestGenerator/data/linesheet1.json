@@ -1,0 +1,39 @@
+﻿{ 
+    "_id" : "2925bbe6-eb26-4e2f-a24b-c134874fc8f3", 
+    "company_id" : "469071e0-8e0f-47aa-b518-80ad83af9e5f", 
+    "master_folder" : 0, 
+    "line_sheet_folder" : "836fdf5f-9272-48c2-802e-f0e917859d8f", 
+    "line_sheet_name" : "Первый", 
+    "line_sheet_description" : "Самый первый", 
+    "main_image_url" : "/preview/469071e0-8e0f-47aa-b518-80ad83af9e5f/15becffc-d907-48f2-b195-14f303223d69/1/0/pdf_0.jpg", 
+    "cover_page" : {
+        "CompanyId" : "469071e0-8e0f-47aa-b518-80ad83af9e5f", 
+        "Container" : "preview", 
+        "FileId" : "15becffc-d907-48f2-b195-14f303223d69", 
+        "FileIndex" : 0, 
+        "FileName" : "pdf_0.jpg", 
+        "FileVersion" : 1, 
+        "PageName" : "", 
+        "side" : null, 
+        "Origin" : "storage/469071e0-8e0f-47aa-b518-80ad83af9e5f/15becffc-d907-48f2-b195-14f303223d69/1/puff-vest.ai", 
+        "RGBComponents" : null, 
+        "Metadata" : {
+
+        }
+    }, 
+    "created_at" : "2017-01-14T20:09:50.233+0000", 
+    "modified_at" : "2017-01-16T13:02:37.508+0000", 
+    "created_by" : {
+        "user_id" : "b133ad32-9ba9-4ec8-968d-2ae4bd64252c", 
+        "user_name" : "TonyStark"
+    }, 
+    "modified_by" : {
+        "user_id" : "b133ad32-9ba9-4ec8-968d-2ae4bd64252c", 
+        "user_name" : "TonyStark"
+    }, 
+    "active" : true, 
+    "permissions" : null, 
+    "comments_count" : 0, 
+    "likes_count" : 0, 
+    "tasks_count" : 0
+}

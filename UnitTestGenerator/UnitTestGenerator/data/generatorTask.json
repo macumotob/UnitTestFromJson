@@ -1,15 +1,23 @@
 ﻿{
     "Assemblies": [
-      "C:\BP\MongoRepository\MongoRepository\bin\Debug\BeProduct.Core.dll"
+      "C:\BP\BeProduct.Core\BeProduct.Core.UnitTest\bin\Debug\BeProduct.Core.dll"
     ],
-    "OutPutFolder": "C:\devs\UnitTestFromJson\UnitTestGenerator\DemoGenerator",
-    "NameSpace" : "DemoGenerator",
+    "OutPutFolder": "C:\BP\BeProduct.Core\BeProduct.Core.UnitTest\",
+    "NameSpace" : "BeProduct.Core.UnitTest",
     "Tasks": [
         {
-            "TypeName": "BeProduct.Core.DataModel.Folder.Folder",
-            "OutputFile": "TestFolderPart.cs",
-            "JsonFile" : "data\folder1.json",
-            "BreakIfExists" :  false
+            "TypeName": "BeProduct.Core.DataModel.LineSheet.LineSheet",
+            "OutputFile": "LineSheetPart.cs",
+            "JsonFile": "data\linesheet1.json",
+            "BreakIfExists": false
+        },
+        {
+            "TypeName": "BeProduct.Core.DataModel.LineSheet.LineSheetFolder",
+            "OutputFile": "LineSheetFolderPart.cs",
+            "JsonFile": "data\lineSheetFolder1.json",
+            "BreakIfExists": false
         }
+
+        
     ]
 }

@@ -11,9 +11,32 @@ namespace UnitTestGenerator
 {
     public class Generator
     {
+        class GenericListInfo
+        {
+            public string ListTypeName { get; set; }
+            public string ItemTypeName { get; set; }
+            public Type ItemType { get; set; }
+            public static GenericListInfo Parse(Type type, Module module)
+            {
+                GenericListInfo info = new GenericListInfo();
+                bool isGeneric = type.IsGenericType;
+                List<string> typeNames = null;
+                if (isGeneric)
+                {
+                    typeNames = _GetGenericTypeList(type);
+                    info.ListTypeName = _MakeGenericClassName(typeNames);
 
+                    //itemType = _module.GetType(itemClassName);
+                    info.ItemType = module.GetType(typeNames[1]);
+                    typeNames.RemoveAt(0);
+                    info.ItemTypeName = _MakeGenericClassName(typeNames);
+                    return info;
+                }
+                return null;
+            }
+        }
         public static Generator Instance = new Generator();
-        Module _module;
+        internal Module _module;
         public string GenerateFromFile(string jsonFile, Type type)
         {
 
@@ -127,7 +150,13 @@ namespace UnitTestGenerator
         //}
         private bool _isSimple(Type type)
         {
-            if (type == null)
+            string[] simpleTypes = { "System.String", "System.Int32", "System.Int64" , "System.Boolean" };
+            string[] complexNames = { "IDictionary`2", "List`1" ,"ExpandoObject"};
+            if (simpleTypes.Contains(type.FullName))
+            {
+                return true;
+            }
+            if (complexNames.Contains(type.Name))
             {
                 return false;
             }
@@ -135,15 +164,27 @@ namespace UnitTestGenerator
             {
                 return true;
             }
-            if (type.Name == "String")
+            if (type == null)
             {
-                return true;
+                return false;
             }
-            if (type.Name == "Boolean")
+            if(type.Name == "IDictionary`2" || type.Name == "List`1")
             {
-                return true;
+                return false;
             }
-            if(type.Name == "Int32")
+            if (type.Name == "Nullable`1")
+            {
+                if (type.GenericTypeArguments != null && type.GenericTypeArguments.Length == 1)
+                {
+                    if (type.GenericTypeArguments[0].Name == "DateTime")
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            var x = this._module.Assembly.GetType(type.FullName);
+            if(x == null)
             {
                 return true;
             }
@@ -151,9 +192,10 @@ namespace UnitTestGenerator
         }
         private string _simpleValue(Type type, object value)
         {
-            if (type.BaseType.Name == "Enum")
+            if (type.IsEnum)
             {
-                return type.FullName + "." + value.ToString();
+                object x = Enum.Parse(type, value.ToString());
+                return type.FullName + "." + x.ToString();
             }
             if (type.Name == "String")
             {
@@ -167,15 +209,44 @@ namespace UnitTestGenerator
             {
                 return value == null ? "0" : value.ToString();
             }
+            if (type.Name == "Int64")
+            {
+                return value == null ? "0" : value.ToString();
+            }
+            if (type.Name == "Int64")
+            {
+                return value == null ? "0" : value.ToString();
+            }
+            if(type.Name == "Nullable`1")
+            {
+                if(type.GenericTypeArguments != null && type.GenericTypeArguments.Length == 1)
+                {
+                    if(type.GenericTypeArguments[0].Name == "DateTime")
+                    {
+                        return " DateTime.Parse(\"" + value.ToString() + "\")";
+                    }
+                }
+            }
+            if(type.Name == "DateTime")
+            {
+                return " DateTime.Parse(\"" + value.ToString() + "\")";
+            }
             throw new NotImplementedException();
         }
 
-        private string _pascal(string s)
+        private static string _pascal(string s)
         {
             int i = 0;
             string name = "";
             while(i < s.Length)
             {
+                if(i == 0 && s[i] != '_')
+                {
+                    name += char.ToUpper(s[i]);
+                    i++;
+                    continue;
+                }
+
                 if(s[i] == '_')
                 {
                     i++;
@@ -196,7 +267,7 @@ namespace UnitTestGenerator
             }
             return name;
         }
-        private Type _getPropertyType(Type type,string propName, out string name)
+        public static Type GetPropertyType(Type type,string propName, out string name)
         {
             name = propName;
             PropertyInfo pi = type.GetProperty(propName);
@@ -212,29 +283,40 @@ namespace UnitTestGenerator
             }
             return pi.PropertyType;
         }
-        private string _generateFromDictionary(Dictionary<string, object> dic, Type type)
+        private bool _IsList(Type type)
+        {
+            return type.FullName.IndexOf("List`") >= 0;
+        }
+        private string _generateFromDictionary(Dictionary<string, object> dic, Type type, string itemTypeName = null)
         {
             string s = " new ";
-            if(type.Name == "IDictionary`2")
+            if (itemTypeName == null)
             {
-                if (type.IsGenericType)
+                if (type.Name == "IDictionary`2")
                 {
-                    s += "Dictionary<";
-                    int j = 0;
-                    foreach(var item in type.GenericTypeArguments)
+                    if (type.IsGenericType)
                     {
-                        s += (j++ == 0 ? "" : ",") + item.FullName;
+                        s += "Dictionary<";
+                        int j = 0;
+                        foreach (var item in type.GenericTypeArguments)
+                        {
+                            s += (j++ == 0 ? "" : ",") + item.FullName;
+                        }
+                        s += ">";
                     }
-                    s += ">";
+                    else
+                    {
+
+                    }
                 }
                 else
                 {
-
+                    s += type.FullName;
                 }
             }
             else
             {
-                s += type.FullName;
+                s += itemTypeName;
             }
             s += "()\r\n{\r\n";
             int i = 0;
@@ -243,10 +325,22 @@ namespace UnitTestGenerator
             {
                 s += i++ == 0 ? "" : ",";
                 object value = dic[key];
-                Type propType = _getPropertyType(type,key,out propName);
+                Type propType = GetPropertyType(type,key,out propName);
+                if (propName == "Properties")
+                {
+
+                }
+
                 if (propType == null)
                 {
-                    s += string.Format("\r\n // element {0} not found", key);
+                    if(type.Name == "ExpandoObject")
+                    {
+                        s += string.Format("\r\n // {0} =  ", key, value.ToString());
+                    }
+                    else
+                    {
+                        s += string.Format("\r\n // element {0} not found", key);
+                    }
                 }
                 else
                 {
@@ -256,40 +350,106 @@ namespace UnitTestGenerator
                     }
                     else
                     {
-                        s += string.Format("\r\n{0} = {1}", propName, _generateCode(value, propType));
+                        if (value == null || value.ToString() == "null")
+                        {
+                            s += string.Format("\r\n{0} = null", propName);
+                        }
+                        else
+                        {
+                            bool isGeneric = propType.IsGenericType;
+                            if (isGeneric && _IsList(propType))
+                            {
+                                List<object> list = value as List<object>;
+                                if (list == null || list.Count == 0)
+                                {
+                                    s += string.Format("\r\n{0} = null", propName);
+                                }
+                                else
+                                {
+                                    GenericListInfo info = GenericListInfo.Parse(propType, _module);
+                                    s += string.Format("\r\n{0} = {1}", propName, _generateFromList(list, propType, info));
+                                }
+                            }
+                            else
+                            {
+                                s += string.Format("\r\n{0} = {1}", propName, _generateCode(value, propType));
+                            }
+                        }
                     }
                 }
             }
             s += "\r\n}\r\n";
             return s;
         }
-        private string _generateFromList(List<object> list,Type type)
+        internal static List<string> _GetGenericTypeList(Type pi)
         {
-            string s = "";
-            bool isGeneric = type.IsGenericType;
-            string itemClassName = null;
-            Type itemType = null;
-            if (isGeneric)
+            Type tmp = pi;
+            List<string> names = new List<string>();
+            int i;
+            while (tmp != null)
             {
-                itemClassName = type._ItemClassName();
-                itemType = _module.GetType(itemClassName);
-                s += " new List<" + itemClassName + ">()\r\n{\r\n";  //_generateConstructor(propertyInfo);
-            }
-            else
-            {
-                s += " new List<object>()\r\n{\r\n";
-            }
-            int i = 0;
-            foreach (var item in list)
-            {
-                s += i++ == 0 ? "" : ",";
-                if (isGeneric)
+                i = tmp.FullName.IndexOf('`');
+                string nm = i == -1 ? tmp.FullName : tmp.FullName.Substring(0, i);
+                names.Add(nm);
+                if (tmp.GenericTypeArguments == null)
                 {
-                    s += _generateCode(item, itemType);
+                    break;
+                }
+                Type[] g = tmp.GenericTypeArguments;
+                if (g == null || g.Length == 0)
+                {
+                    break;
+                }
+                if (g.Length == 1)
+                {
+                    tmp = g[0];
                 }
                 else
                 {
+                    string s = "";
+                    for(int j = 0; j < g.Length; j++)
+                    {
+                        s += j > 0 ? "," : "";
+                        i = g[j].FullName.IndexOf('`');
+                        s += i == -1 ? g[j].FullName : g[j].FullName.Substring(0, i);
+                    }
+                    names.Add(s);
+                    tmp = null;
+                }
+            }
+   
+            return names;
+        }
+        internal static string _MakeGenericClassName(List<string> names)
+        {
+//            names.RemoveAt(0);
+            string s = "";
+            for (int i = 0; i < names.Count; i++)
+            {
+                s += i == names.Count - 1 ? names[i] : names[i] + "<";
+            }
+            for (int i = 0; i < names.Count; i++)
+            {
+                s += i == names.Count - 1 ? "" : ">";
+            }
+            return s;
+        }
 
+        private string _generateFromList(List<object> list,Type type, GenericListInfo info)
+        {
+            int i = 0;
+            string s = "new " + info.ListTypeName + "(){\r\n";
+            foreach (var item in list)
+            {
+                s += i++ == 0 ? "" : ",";
+                Dictionary<string, object> dic = item as Dictionary<string, object>;
+                if (info.ItemType == null && dic == null)
+                {
+                    s += "null";
+                }
+                else
+                {
+                    s += _generateFromDictionary(dic, info.ItemType,info.ItemTypeName);
                 }
             }
             s += "\r\n}\r\n";
@@ -302,19 +462,16 @@ namespace UnitTestGenerator
             {
                 return _generateFromDictionary(data as Dictionary<string, object>, type);
             }
-            List<object> list1 = (data as List<object>);
-            if(list1 != null)
-            {
-                return _generateFromList(list1 as List<object>, type);
-            }
-
-            string itemClassName = null;
-            bool isGeneric = type.IsGenericType;//propertyInfo._IsGeneric();
-            if (isGeneric)
-            {
-                itemClassName = type._ItemClassName();
-            }
-            return null;
+            //List<object> list1 = (data as List<object>);
+            //if(list1 != null)
+            //{
+            //    return _generateFromList(list1 as List<object>, type);
+            //}
+            //if(type == null)
+            //{
+            //    return "null";
+            //}
+            throw new NotImplementedException();
         }
     }
 }

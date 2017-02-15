@@ -146,7 +146,7 @@ namespace UnitTestGenerator
 
                 }
                 string value = "";
-                while (i < s.Length && s[i] != ',' && s[i] != '}' && s[i] != ']')
+                while (i < s.Length && s[i] != ',' && s[i] != '}' && s[i] != ']' && s[i] != '\r' && s[i] != '\n')
                 {
                     value += s[i++];
                 }
@@ -157,23 +157,23 @@ namespace UnitTestGenerator
         public Dictionary<string, object> Parse(string s)
         {
             Dictionary<string, object> root = null;
-            
+
             int i = 0;
-            string name = null;
+            //string name = null;
             object value = null;
             while (i < s.Length)
             {
                 _skipws(s, ref i);
-                if(i >= s.Length)
+                if (i >= s.Length)
                 {
                     break;
                 }
-                    char c = s[i];
+                char c = s[i];
                 switch (c)
                 {
                     case '{':
-                        root = (Dictionary < string, object> )_readObject(s,ref i);
-                         break;
+                        root = (Dictionary<string, object>)_readObject(s, ref i);
+                        break;
                     case '[':
                         value = _readArray(s, ref i);
 

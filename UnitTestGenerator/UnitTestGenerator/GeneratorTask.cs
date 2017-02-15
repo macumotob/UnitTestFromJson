@@ -34,6 +34,21 @@ namespace UnitTestGenerator
     public class GeneratorTasks
     {
         private List<object> _assemblies { get; set; }
+        public List<object> AssemblyNames
+        {
+            get
+            {
+                if (_assemblies == null)
+                {
+                    _assemblies = new List<object>();
+                }
+                return _assemblies;
+            }
+            set
+            {
+                _assemblies = value;
+            }
+        }
         private List<Assembly> _modules;
         public List<Assembly> Modules
         {
@@ -115,7 +130,6 @@ namespace UnitTestGenerator
             {
                 sw.WriteLine("//  UnitTest class : " + type.FullName);
                 sw.WriteLine("using System;");
-                sw.WriteLine("using System;");
                 sw.WriteLine("using System.Collections.Generic;");
                 sw.WriteLine("using System.Linq;");
                 sw.WriteLine("using System.Text;");
@@ -125,7 +139,7 @@ namespace UnitTestGenerator
                 sw.WriteLine();
                 sw.WriteLine("namespace " + NameSpace);
                 sw.WriteLine("{");
-                sw.WriteLine("[TestClass]");
+                //sw.WriteLine("[TestClass]");
                 sw.WriteLine("public partial class Test" + type.Name);
                 sw.WriteLine("{");
                 sw.WriteLine(" public " + type.FullName + " CreateInstance()");

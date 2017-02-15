@@ -1,0 +1,357 @@
+﻿{ 
+    "_id" : "b776f7d6-e976-4295-8591-12ed21f8b717", 
+    "company_id" : "469071e0-8e0f-47aa-b518-80ad83af9e5f", 
+    "line_sheet_folder_name" : "LineSheet1", 
+    "description" : "Desc for LineSheet1", 
+    "master_folder" : "Style", 
+    "active" : true, 
+    "created_at" : "2017-02-13T14:38:06.397+0000", 
+    "modified_at" : "2017-02-13T14:39:53.669+0000", 
+    "created_by" : {
+        "user_id" : "b133ad32-9ba9-4ec8-968d-2ae4bd64252c", 
+        "user_name" : "TonyStark"
+    }, 
+    "modified_by" : {
+        "user_id" : "b133ad32-9ba9-4ec8-968d-2ae4bd64252c", 
+        "user_name" : "TonyStark"
+    }, 
+    "folder_types" : [
+        {
+            "_id" : "666a7191-7fdb-478f-89f3-ea4a2867cd31", 
+            "name" : "T-Shirts"
+        }
+    ], 
+    "apps" : [
+        {
+            "_id" : "48555ed6-f132-482d-b1c5-6ff84f041407", 
+            "name" : "Internal Cost"
+        }, 
+        {
+            "_id" : "90ea1da5-24f7-4fd9-9a9c-c605ce876860", 
+            "name" : "Import Costing"
+        }, 
+        {
+            "_id" : "6a46107b-aa79-4d56-9c5f-e2a8f22b6322", 
+            "name" : "Sample Status"
+        }, 
+        {
+            "_id" : "3f21d499-cfd0-424a-9132-3b3b8ff910c9", 
+            "name" : "A GRIP APP WW"
+        }, 
+        {
+            "_id" : "3ab4e1ee-22c8-4a78-8579-e84b41bc8433", 
+            "name" : "GRID 001"
+        }, 
+        {
+            "_id" : "12fd3d7a-638b-42a8-9cc2-0f2687e3d3bd", 
+            "name" : "Basic Costing"
+        }
+    ], 
+    "schema" : [
+        {
+            "field_id" : "header_number", 
+            "field_name" : "Style Number", 
+            "field_type" : "Text", 
+            "prefix" : null, 
+            "app" : {
+                "_id" : null, 
+                "name" : "Header", 
+                "Template" : null, 
+                "Installed" : null
+            }, 
+            "active" : true, 
+            "aggregate" : false, 
+            "go_to_page" : false, 
+            "filter" : null, 
+            "sort" : null, 
+            "properties" : {
+                "DefaultValue" : null, 
+                "MaxValueCharacters" : 240, 
+                "TooltipMessage" : "Enter Style Number", 
+                "Required" : true, 
+                "AutoNumber" : true, 
+                "AllowDuplicate" : false, 
+                "AutoNumberPrefix" : "T-[00000]-A", 
+                "Enabled" : false
+            }
+        }, 
+        {
+            "field_id" : "header_name", 
+            "field_name" : "Style Name", 
+            "field_type" : "Text", 
+            "prefix" : null, 
+            "app" : {
+                "_id" : null, 
+                "name" : "Header", 
+                "Template" : null, 
+                "Installed" : null
+            }, 
+            "active" : true, 
+            "aggregate" : false, 
+            "go_to_page" : false, 
+            "filter" : null, 
+            "sort" : null, 
+            "properties" : {
+                "DefaultValue" : null, 
+                "MaxValueCharacters" : 240, 
+                "TooltipMessage" : "Enter Style Name", 
+                "Required" : true
+            }
+        }, 
+        {
+            "field_id" : "division", 
+            "field_name" : "Division", 
+            "field_type" : "DropDown", 
+            "prefix" : "Schema", 
+            "app" : {
+                "_id" : null, 
+                "name" : "Header", 
+                "Template" : null, 
+                "Installed" : null
+            }, 
+            "active" : false, 
+            "aggregate" : false, 
+            "go_to_page" : false, 
+            "filter" : null, 
+            "sort" : null, 
+            "properties" : {
+                "Choices" : [
+                    {
+                        "value" : ""
+                    }, 
+                    {
+                        "value" : "Childrenswear"
+                    }, 
+                    {
+                        "value" : "Menswear"
+                    }, 
+                    {
+                        "value" : "Womenswear"
+                    }
+                ], 
+                "DefaultValue" : "", 
+                "SortAlphabetically" : true, 
+                "TooltipMessage" : "Select a division", 
+                "Required" : false, 
+                "ChoicesDesigner" : [
+                    {
+                        "value" : "", 
+                        "active" : true
+                    }, 
+                    {
+                        "value" : "Childrenswear", 
+                        "active" : true
+                    }, 
+                    {
+                        "value" : "Menswear", 
+                        "active" : true
+                    }, 
+                    {
+                        "value" : "Womenswear", 
+                        "active" : true
+                    }
+                ], 
+                "ChoicesField" : "ChoicesDesigner", 
+                "ValueField" : "value", 
+                "TextField" : "value", 
+                "WithCode" : true, 
+                "ShowCode" : true
+            }
+        }, 
+        {
+            "field_id" : "status", 
+            "field_name" : "Status", 
+            "field_type" : "DropDown", 
+            "prefix" : "Schema", 
+            "app" : {
+                "_id" : null, 
+                "name" : "Header", 
+                "Template" : null, 
+                "Installed" : null
+            }, 
+            "active" : false, 
+            "aggregate" : false, 
+            "go_to_page" : false, 
+            "filter" : null, 
+            "sort" : null, 
+            "properties" : {
+                "Choices" : [
+                    {
+                        "value" : "*Not Started"
+                    }, 
+                    {
+                        "value" : "In Progress"
+                    }, 
+                    {
+                        "value" : "Approved"
+                    }, 
+                    {
+                        "value" : "Approved w/ Corrections"
+                    }, 
+                    {
+                        "value" : "Rejected"
+                    }
+                ], 
+                "DefaultValue" : "*Not Started", 
+                "SortAlphabetically" : false, 
+                "TooltipMessage" : "Select a status...", 
+                "Required" : false, 
+                "ChoicesDesigner" : [
+                    {
+                        "value" : "*Not Started", 
+                        "active" : true
+                    }, 
+                    {
+                        "value" : "In Progress", 
+                        "active" : true
+                    }, 
+                    {
+                        "value" : "Approved", 
+                        "active" : true
+                    }, 
+                    {
+                        "value" : "Approved w/ Corrections", 
+                        "active" : true
+                    }, 
+                    {
+                        "value" : "Rejected", 
+                        "active" : true
+                    }
+                ], 
+                "ChoicesField" : "ChoicesDesigner", 
+                "ValueField" : "value", 
+                "TextField" : "value", 
+                "WithCode" : true, 
+                "ShowCode" : true
+            }
+        }, 
+        {
+            "field_id" : "multi_select", 
+            "field_name" : "MultiSelect", 
+            "field_type" : "MultiSelect", 
+            "prefix" : "Schema", 
+            "app" : {
+                "_id" : null, 
+                "name" : "Header", 
+                "Template" : null, 
+                "Installed" : null
+            }, 
+            "active" : false, 
+            "aggregate" : false, 
+            "go_to_page" : false, 
+            "filter" : null, 
+            "sort" : null, 
+            "properties" : {
+                "Choices" : [
+                    {
+                        "value" : "First Value", 
+                        "code" : ""
+                    }, 
+                    {
+                        "value" : "Second Value", 
+                        "code" : ""
+                    }, 
+                    {
+                        "value" : "3 Value", 
+                        "code" : ""
+                    }, 
+                    {
+                        "value" : "Choice 4", 
+                        "code" : ""
+                    }
+                ], 
+                "ChoicesDesigner" : [
+                    {
+                        "value" : "First Value", 
+                        "code" : "", 
+                        "active" : true
+                    }, 
+                    {
+                        "value" : "Second Value", 
+                        "code" : "", 
+                        "active" : true
+                    }, 
+                    {
+                        "value" : "3 Value", 
+                        "code" : "", 
+                        "active" : true
+                    }, 
+                    {
+                        "value" : "Choice 4", 
+                        "code" : "", 
+                        "active" : true
+                    }
+                ], 
+                "ChoicesField" : "ChoicesDesigner", 
+                "DefaultValue" : "Second Value", 
+                "ValueField" : "value", 
+                "TextField" : "value", 
+                "UseObjectValue" : false, 
+                "WithCode" : true, 
+                "ShowCode" : true, 
+                "SortAlphabetically" : false, 
+                "TooltipMessage" : "MultiSelect control", 
+                "Required" : false
+            }
+        }, 
+        {
+            "field_id" : "created_by", 
+            "field_name" : "Created", 
+            "field_type" : "UserLabel", 
+            "prefix" : null, 
+            "app" : {
+                "_id" : null, 
+                "name" : "Header", 
+                "Template" : null, 
+                "Installed" : null
+            }, 
+            "active" : false, 
+            "aggregate" : false, 
+            "go_to_page" : false, 
+            "filter" : null, 
+            "sort" : null, 
+            "properties" : {
+                "DataType" : "String", 
+                "Required" : false, 
+                "DefaultValue" : null, 
+                "Tooltip" : "Created by User", 
+                "FieldId2" : "CreatedAt", 
+                "FieldId3" : "CreatedUserPic"
+            }
+        }
+    ], 
+    "control" : {
+        "search" : [
+
+        ]
+    }, 
+    "view" : {
+        "main_material" : false, 
+        "size_range" : false, 
+        "colorway" : false, 
+        "fields" : [
+
+        ]
+    }, 
+    "permissions" : [
+        {
+            "user" : {
+                "user_id" : "b133ad32-9ba9-4ec8-968d-2ae4bd64252c", 
+                "user_name" : "TonyStark"
+            }, 
+            "role" : {
+                "role_id" : "2340c034-538b-4fcc-9634-d772565a29d7", 
+                "role_name" : "Admin"
+            }, 
+            "UserId" : "b133ad32-9ba9-4ec8-968d-2ae4bd64252c", 
+            "FirstName" : "Padey", 
+            "LastName" : "cartelera", 
+            "UserName" : "TonyStark", 
+            "full_name" : "Padeycartelera", 
+            "Title" : null, 
+            "Active" : true, 
+            "order" : 0, 
+            "ApplicationPermissions" : null
+        }
+    ]
+}

@@ -29,18 +29,5 @@ namespace UnitTestGenerator
             return false;
         }
 
-        public static string _ItemClassName(this Type pi)
-        {
-            if (pi.GenericTypeArguments != null)
-            {
-                Type[] g = pi.GenericTypeArguments;
-                if (g != null && g.Length == 1)
-                {
-                    Type t = g[0];
-                    return t.FullName;
-                }
-            }
-            throw new NotImplementedException();
-        }
     }
 }
