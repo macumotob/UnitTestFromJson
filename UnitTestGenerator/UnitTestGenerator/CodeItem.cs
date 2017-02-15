@@ -48,7 +48,7 @@ namespace UnitTestGenerator
                     foreach (string key in d.Keys)
                     {
                         s += index++ == 0 ? "" : ",";
-                        s += key + " = " + _Object2String(d[key]);
+                        s += key + " = " + Utils.ObjectToString(d[key]);
                     }
                     s += "}";
                 }
@@ -61,50 +61,7 @@ namespace UnitTestGenerator
             s += "\r\n}";
             return s;
         }
-        private bool _IsNumber(string s)
-        {
-            int comaCount = 0;
-            int i = 0;
-            if (string.IsNullOrEmpty(s))
-            {
-                return false;
-            }
-            while(i < s.Length)
-            {
-                if (!Char.IsDigit(s[i]))
-                {
-                    if(s[i] == '.')
-                    {
-                        comaCount++;
-                        if (comaCount > 1) return false;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                }
-                i++;
-            }
-            return true;
-        }
-        private string _Object2String(object value)
-        {
-            if(value == null)
-            {
-                return "null";
-            }
-            string s = value.ToString();
-            if(s == "null" || s == "true" || s == "false")
-            {
-                return s;
-            }
-            if (_IsNumber(s))
-            {
-                return s;
-            }
-            return "\"" +value.ToString() + "\"";
-        }
-        private string _Value2Code()
+        private string _Value2String()
         {
             if (Value == null)
             {
@@ -116,25 +73,13 @@ namespace UnitTestGenerator
             {
                 return _ListValue2Code();
             }
-            return _Object2String(Value);
-            string value = Value.ToString();
-
-            if (value == "true" || value == "false")
-            {
-                return value;
-            }
-            if (Value.GetType().FullName == "System.String")
-            {
-                return "\"" + Value.ToString() + "\"";
-            }
-
-            return Value.ToString();
+            return Utils.ObjectToString(Value);
         }
         public string SimpleValue()
         {
             if (PropertyType == null)
             {
-                return _Value2Code();
+                return _Value2String();
             }
             if (PropertyType.IsEnum)
             {
@@ -172,21 +117,6 @@ namespace UnitTestGenerator
                 return " DateTime.Parse(\"" + Value.ToString() + "\")";
             }
             return null;
-        }
-        public string Code
-        {
-            get
-            {
-                if (_IsSimpleType())
-                {
-                    return "." + ObjectPropertyName + " = " + SimpleValue();
-                }
-                if (PropertyType.IsEnum)
-                {
-                    return "." + ObjectPropertyName + " = " + SimpleValue();
-                }
-                return "COMPLEX";
-            }
         }
         public override string ToString()
         {
