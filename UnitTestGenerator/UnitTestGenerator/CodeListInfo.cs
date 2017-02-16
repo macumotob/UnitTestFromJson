@@ -12,46 +12,22 @@ namespace UnitTestGenerator
         public string ListTypeName { get; set; }
         public string ItemTypeName { get; set; }
         public Type ItemType { get; set; }
-        private List<string> _typeNames = null;
 
+        private List<string> _typeNames = new List<string>();
         public List<CodeItems> Items = new List<CodeItems>();
-        private List<string> _GetGenericTypeList(Type pi)
+
+        private void _GetGenericTypeList(Type type)
         {
-            Type tmp = pi;
-            List<string> names = new List<string>();
+            Type tmp = type;
             int i;
-            while (tmp != null)
+            int n = tmp.FullName.IndexOf('`');
+            string name = n == -1 ? tmp.FullName : tmp.FullName.Substring(0, n);
+            _typeNames.Add(name);
+            for (i = 0; i < type.GenericTypeArguments.Length; i++)
             {
-                i = tmp.FullName.IndexOf('`');
-                string nm = i == -1 ? tmp.FullName : tmp.FullName.Substring(0, i);
-                names.Add(nm);
-                if (tmp.GenericTypeArguments == null)
-                {
-                    break;
-                }
-                Type[] g = tmp.GenericTypeArguments;
-                if (g == null || g.Length == 0)
-                {
-                    break;
-                }
-                if (g.Length == 1)
-                {
-                    tmp = g[0];
-                }
-                else
-                {
-                    string s = "";
-                    for (int j = 0; j < g.Length; j++)
-                    {
-                        s += j > 0 ? "," : "";
-                        i = g[j].FullName.IndexOf('`');
-                        s += i == -1 ? g[j].FullName : g[j].FullName.Substring(0, i);
-                    }
-                    names.Add(s);
-                    tmp = null;
-                }
+                tmp = type.GenericTypeArguments[i];
+                _GetGenericTypeList(tmp);
             }
-            return names;
         }
         private string _MakeGenericClassName(List<string> names)
         {
@@ -69,10 +45,11 @@ namespace UnitTestGenerator
 
         public void Parse(Type type, Module module)
         {
+            _typeNames.Clear();
             bool isGeneric = type.IsGenericType;
             if (isGeneric)
             {
-                _typeNames = _GetGenericTypeList(type);
+                _GetGenericTypeList(type);
                 ListTypeName = _MakeGenericClassName(_typeNames);
 
                 ItemType = module.GetType(_typeNames[1]);
