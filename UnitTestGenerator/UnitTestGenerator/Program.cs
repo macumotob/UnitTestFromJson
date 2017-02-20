@@ -21,9 +21,12 @@ namespace UnitTestGenerator
                 Dictionary<string, object> dic = parser.Parse(json);
                 GeneratorTasks tasks = new GeneratorTasks();
                 tasks.Parse(dic);
-                return;
+
             }
-            Console.WriteLine("ERROR! FILE : " + file + " NOT FOUND!!!");
+            else
+            {
+                Console.WriteLine("ERROR! FILE : " + file + " NOT FOUND!!!");
+            }
             Console.WriteLine("\r\n\tpress Q to exit ...");
             while (Console.ReadKey().Key != ConsoleKey.Q) ;
         }

@@ -27,10 +27,10 @@ namespace UnitTestGenerator
             //TODO use  ImplementedInterfaces
             return property.PropertyType.Name.IndexOf("List`") == 0;
         }
-        private void _setFromList(object doc,List<object> list)
-        {
+        //private void _setFromList(object doc,List<object> list)
+        //{
 
-        }
+        //}
         private void _setProperties(object doc, Type type, Dictionary<string, object> dic)
         {
             PropertyInfo[] properties = type.GetProperties();

@@ -146,6 +146,36 @@ namespace UnitTestGenerator
             var dic = parser.Parse(json);
             _Parse(dic, type);
         }
+        protected void _GenerateAssert(string docName, StreamWriter sw, string repository , bool isRepoGeneric)
+        {
+            if (repository == null)
+            {
+                return;
+            }
+
+            sw.WriteLine("[TestMethod]");
+            sw.WriteLine("public void TestAssertTrue()\r\n{");
+            sw.WriteLine(" " + TargetType.FullName + " " + docName + "1 =  this.CreateInstance();");
+            if (isRepoGeneric)
+            {
+                sw.WriteLine(" var repo = new " + repository + "<" + TargetType.FullName + ">();");
+            }
+            else
+            {
+                sw.WriteLine(" var repo = new " + repository + "();");
+            }
+            sw.WriteLine(" repo.Insert(" + docName + "1);");
+            sw.WriteLine(" " + TargetType.FullName + " " + docName + " =  repo.Get({0}1.Id);", docName  );
+            sw.WriteLine();
+            foreach (CodeItem item in _items)
+            {
+                if (item.IsPrimitive)
+                {
+                    sw.WriteLine("  Assert.IsTrue(" + docName + "." + item.ObjectPropertyName + " == " + item.SimpleValue() + ");");
+                }
+            }
+            sw.WriteLine("\r\n}");
+        }
         protected void _GenerateCode(string docName, StreamWriter sw)
         {
             bool isExpando = HasUndefinedTypes();
@@ -229,7 +259,7 @@ namespace UnitTestGenerator
 
             }
         }
-        public void GenarateFile(string fullFileName, string namespaceName)
+        public void GenarateFile(string fullFileName, string namespaceName, string repository, bool isRepoGeneric)
         {
 
             if (TargetType == null)
@@ -247,6 +277,7 @@ namespace UnitTestGenerator
                 sw.WriteLine("using System.Linq;");
                 sw.WriteLine("using System.Text;");
                 sw.WriteLine("using System.Threading.Tasks;");
+                sw.WriteLine("using BeProduct.Infrastructure.Repository;");
                 sw.WriteLine("using Microsoft.VisualStudio.TestTools.UnitTesting;");
 
                 sw.WriteLine();
@@ -263,6 +294,8 @@ namespace UnitTestGenerator
 
                 sw.WriteLine("  return doc;");
                 sw.WriteLine("}");
+                _GenerateAssert(documentName, sw, repository, isRepoGeneric);
+
                 sw.WriteLine("} //end of class");
                 sw.WriteLine("} //end of namespace");
                 sw.Close();

@@ -9,7 +9,9 @@
             "TypeName": "BeProduct.Core.DataModel.LineSheet.LineSheetFolder",
             "OutputFile": "LineSheetFolderPart.cs",
             "JsonFile": "data\lineSheetFolder1.json",
-            "BreakIfExists": false
+            "BreakIfExists": false,
+            "Repository": "LineSheetFolderRepository",
+            "IsRepositoryGeneric" :  false
         },
         {
             "TypeName": "BeProduct.Core.DataModel.LineSheet.LineSheet",
@@ -21,7 +23,9 @@
             "TypeName": "BeProduct.Core.DataModel.LineSheet.LineSheetDocument",
             "OutputFile": "LineSheetDocumentPart.cs",
             "JsonFile": "data\lineSheetDocument1.json",
-            "BreakIfExists": false
+            "BreakIfExists": false,
+            "Repository": "LineSheetDocumentRepository",
+            "IsRepositoryGeneric" :  true
         }
 
         

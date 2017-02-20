@@ -12,7 +12,7 @@ namespace UnitTestGenerator
         public string ListTypeName { get; set; }
         public string ItemTypeName { get; set; }
         public Type ItemType { get; set; }
-        public static GenericListInfo Parse(Type type, Module module)
+        public GenericListInfo Parse(Type type, Module module)
         {
             GenericListInfo info = new GenericListInfo();
             bool isGeneric = type.IsGenericType;
@@ -30,7 +30,7 @@ namespace UnitTestGenerator
             }
             return null;
         }
-        internal static List<string> _GetGenericTypeList(Type pi)
+        private List<string> _GetGenericTypeList(Type pi)
         {
             Type tmp = pi;
             List<string> names = new List<string>();
@@ -70,7 +70,7 @@ namespace UnitTestGenerator
             return names;
         }
 
-        internal static string _MakeGenericClassName(List<string> names)
+        private string _MakeGenericClassName(List<string> names)
         {
             //            names.RemoveAt(0);
             string s = "";

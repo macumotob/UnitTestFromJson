@@ -14,6 +14,8 @@ namespace UnitTestGenerator
         public string OutputFile { get; set; }
         public string JsonFile { get; set; }
         public bool BreakIfExists { get; set; }
+        public bool IsRepositoryGeneric { get; set; }
+        public string Repository { get; set; }
         public void Parse(Dictionary<string, object> dic)
         {
             Type type = this.GetType();
@@ -66,6 +68,7 @@ namespace UnitTestGenerator
             }
         }
         public string OutPutFolder { get; set; }
+        
         public string NameSpace { get; set; }
 
         public void Parse(Dictionary<string, object> dic)
@@ -98,25 +101,19 @@ namespace UnitTestGenerator
             {
                 throw new Exception("File not found : " + file);
             }
+            Console.WriteLine("Source json : {0}", file);
             string json = System.IO.File.ReadAllText(file, Encoding.UTF8);
             string outputFile = this.OutPutFolder + task.OutputFile;
-
-            if (true)
+            if(task.BreakIfExists && System.IO.File.Exists(outputFile))
             {
-                CodeItems codes = new CodeItems();
-                _assemblies.ForEach(item => codes.RegisterAssembly((string)item));
-                Type type = codes.FindType(task.TypeName);
-                codes.Parse(json, type);
-                codes.GenarateFile(outputFile, this.NameSpace);// task.TypeName);
+                return;
             }
-            else
-            {
-                _assemblies.ForEach(item => CodeItems.Instance.RegisterAssembly((string)item));
-                Type type = CodeItems.Instance.FindType(task.TypeName);
-                CodeItems.Instance.Parse(json, type);
-                CodeItems.Instance.GenarateFile(outputFile, this.NameSpace);// task.TypeName);
-            }
-
+            CodeItems codes = new CodeItems();
+            _assemblies.ForEach(item => codes.RegisterAssembly((string)item));
+            Type type = codes.FindType(task.TypeName);
+            codes.Parse(json, type);
+            codes.GenarateFile(outputFile, this.NameSpace, task.Repository,task.IsRepositoryGeneric);
+            Console.WriteLine("Output file : {0}\r\n", outputFile);
         }
         private void _LoadTasks(List<object> list)
         {
@@ -126,20 +123,19 @@ namespace UnitTestGenerator
                 GeneratorTask task = new GeneratorTask();
                 task.Parse(dic);
                 _Generate(task);
-                //_Generate(task);
             });
         }
-        private Type _FindType(string typeName)
-        {
-            Type type = null;
-            _modules.ForEach(m =>
-            {
-                if (type == null)
-                {
-                    type = m.GetType(typeName);
-                }
-            });
-            return type;
-        }
+        //private Type _FindType(string typeName)
+        //{
+        //    Type type = null;
+        //    _modules.ForEach(m =>
+        //    {
+        //        if (type == null)
+        //        {
+        //            type = m.GetType(typeName);
+        //        }
+        //    });
+        //    return type;
+        //}
     }
 }
