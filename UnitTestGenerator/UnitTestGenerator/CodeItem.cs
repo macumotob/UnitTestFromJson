@@ -12,7 +12,8 @@ namespace UnitTestGenerator
         public string ObjectPropertyName { get; set; }
         public object Value { get; set; }
         public Type PropertyType { get; set; }
-
+        public bool IsList { get; set; }
+        public bool IsDictionary{ get; set; }
         public bool IsPrimitive
         {
             get
@@ -31,7 +32,28 @@ namespace UnitTestGenerator
                 return true;
             }
             string[] simpleTypes = { "System.String", "System.Int32", "System.Int64", "System.Boolean", "System.DateTime" };
-            return simpleTypes.Contains(PropertyType.FullName);
+            if(simpleTypes.Contains(PropertyType.FullName))
+            {
+                return true;
+            }
+
+            List<string> list = Utils.GenericType2List(PropertyType);
+            if(list.Count > 1)
+            {
+                if (list[0] == "System.Collections.Generic.List" || list[0] == "System.Collections.Generic.IDictionary")
+                {
+                    IsList = list[0] == "System.Collections.Generic.List";
+                    IsDictionary = list[0] == "System.Collections.Generic.IDictionary";
+                }
+                else
+                {
+                    if(list.Count == 2 && list[0] == "System.Nullable" && list[1] == "System.DateTime")
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
         private string _ListValue2Code()
         {
@@ -83,7 +105,18 @@ namespace UnitTestGenerator
             }
             if (PropertyType.IsEnum)
             {
-                return PropertyType.FullName + "." + Value.ToString();
+                if (Utils.IsNumber(Value.ToString()))
+                {
+                    int envalue;
+                    int.TryParse(Value.ToString(), out envalue);
+                    string name = Enum.GetName(this.PropertyType, envalue);
+                    return PropertyType.FullName + "." + name;
+                }
+                else
+                {
+                    return PropertyType.FullName + "." + Value.ToString();
+                }
+                
             }
 
             if (PropertyType.Name == "String")

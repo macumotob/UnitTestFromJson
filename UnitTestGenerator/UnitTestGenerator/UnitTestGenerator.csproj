@@ -54,6 +54,7 @@
     <Compile Include="Fract.cs" />
     <Compile Include="Generator.cs" />
     <Compile Include="GeneratorTask.cs" />
+    <Compile Include="GenericListInfo.cs" />
     <Compile Include="JsonParser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -69,6 +70,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="data\linesheet1.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="data\lineSheetDocument1.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="data\lineSheetFolder1.json">

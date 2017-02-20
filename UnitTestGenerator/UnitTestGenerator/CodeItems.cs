@@ -105,7 +105,8 @@ namespace UnitTestGenerator
             foreach (var elementName in dic.Keys)
             {
                 value = dic[elementName];
-                Type propType = Generator.GetPropertyType(type, elementName, out propName);
+                Type propType = Utils.GetPropertyType(type, elementName, out propName);
+
                 CodeItem item = _Add(elementName, propName, propType, value);
                 if (item.IsPrimitive)
                 {
@@ -199,8 +200,16 @@ namespace UnitTestGenerator
                     }
                     else
                     {
-                        code = "\r\n  " + name + " = new " + (item.PropertyType == null ? " NULL" : item.PropertyType.FullName) + "();";
+                        if (x._items.Count == 0)
+                        {
+                            code = "\r\n  " + name + " = null;";
+                        }
+                        else
+                        {
+                            code = "\r\n  " + name + " = new " + (item.PropertyType == null ? " NULL" : item.PropertyType.FullName) + "();";
+                        }
                         sw.WriteLine(code);
+
                         x._GenerateCode(name, sw);
                     }
                 }

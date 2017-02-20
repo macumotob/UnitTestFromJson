@@ -6,15 +6,21 @@
     "NameSpace" : "BeProduct.Core.UnitTest",
     "Tasks": [
         {
+            "TypeName": "BeProduct.Core.DataModel.LineSheet.LineSheetFolder",
+            "OutputFile": "LineSheetFolderPart.cs",
+            "JsonFile": "data\lineSheetFolder1.json",
+            "BreakIfExists": false
+        },
+        {
             "TypeName": "BeProduct.Core.DataModel.LineSheet.LineSheet",
             "OutputFile": "LineSheetPart.cs",
             "JsonFile": "data\linesheet1.json",
             "BreakIfExists": false
         },
         {
-            "TypeName": "BeProduct.Core.DataModel.LineSheet.LineSheetFolder",
-            "OutputFile": "LineSheetFolderPart.cs",
-            "JsonFile": "data\lineSheetFolder1.json",
+            "TypeName": "BeProduct.Core.DataModel.LineSheet.LineSheetDocument",
+            "OutputFile": "LineSheetDocumentPart.cs",
+            "JsonFile": "data\lineSheetDocument1.json",
             "BreakIfExists": false
         }
 
