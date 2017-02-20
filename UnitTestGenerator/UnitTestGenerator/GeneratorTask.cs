@@ -17,7 +17,7 @@ namespace UnitTestGenerator
         public void Parse(Dictionary<string, object> dic)
         {
             Type type = this.GetType();
-            foreach(string key in dic.Keys)
+            foreach (string key in dic.Keys)
             {
                 var p = type.GetProperty(key);
                 if (p.PropertyType.Name == "Boolean")
@@ -54,9 +54,9 @@ namespace UnitTestGenerator
         {
             get
             {
-                if(_modules == null)
+                if (_modules == null)
                 {
-                    _modules =  new List<Assembly>();
+                    _modules = new List<Assembly>();
                 }
                 return _modules;
             }
@@ -80,12 +80,12 @@ namespace UnitTestGenerator
             {
                 Directory.CreateDirectory(OutPutFolder);
             }
-            List<object>  tasks =(List<object>)dic["Tasks"];
+            List<object> tasks = (List<object>)dic["Tasks"];
             _LoadTasks(tasks);
         }
         private void _LoadModules()
         {
-            foreach(var file in _assemblies)
+            foreach (var file in _assemblies)
             {
                 Assembly ass = Assembly.LoadFile(file.ToString());
                 Modules.Add(ass);
@@ -94,7 +94,7 @@ namespace UnitTestGenerator
         private void _Generate(GeneratorTask task)
         {
             string file = AppDomain.CurrentDomain.BaseDirectory + task.JsonFile;
-            if(!System.IO.File.Exists(file))
+            if (!System.IO.File.Exists(file))
             {
                 throw new Exception("File not found : " + file);
             }
@@ -120,7 +120,8 @@ namespace UnitTestGenerator
         }
         private void _LoadTasks(List<object> list)
         {
-            list.ForEach(item => {
+            list.ForEach(item =>
+            {
                 Dictionary<string, object> dic = (Dictionary<string, object>)item;
                 GeneratorTask task = new GeneratorTask();
                 task.Parse(dic);
@@ -131,63 +132,14 @@ namespace UnitTestGenerator
         private Type _FindType(string typeName)
         {
             Type type = null;
-            _modules.ForEach(m => {
-                if (type == null) { 
+            _modules.ForEach(m =>
+            {
+                if (type == null)
+                {
                     type = m.GetType(typeName);
                 }
             });
             return type;
         }
-        //private void _Generate(GeneratorTask task)
-        //{
-        //    Type type = _FindType(task.TypeName);
-        //    string output = OutPutFolder + "\\" + task.OutputFile;
-        //    if(File.Exists(output) && task.BreakIfExists)
-        //    {
-        //        return;
-        //    }
-        //    string sourceFile = AppDomain.CurrentDomain.BaseDirectory + "\\" + task.JsonFile;
-        //    if (!File.Exists(sourceFile))
-        //    {
-        //        return;
-        //    }
-            
-        //    StreamWriter sw = new StreamWriter(output);
-
-        //    if(type != null)
-        //    {
-        //        sw.WriteLine("//  UnitTest class : " + type.FullName);
-        //        sw.WriteLine("using System;");
-        //        sw.WriteLine("using System.Collections.Generic;");
-        //        sw.WriteLine("using System.Linq;");
-        //        sw.WriteLine("using System.Text;");
-        //        sw.WriteLine("using System.Threading.Tasks;");
-        //        sw.WriteLine("using Microsoft.VisualStudio.TestTools.UnitTesting;");
-
-        //        sw.WriteLine();
-        //        sw.WriteLine("namespace " + NameSpace);
-        //        sw.WriteLine("{");
-        //        //sw.WriteLine("[TestClass]");
-        //        sw.WriteLine("public partial class Test" + type.Name);
-        //        sw.WriteLine("{");
-        //        sw.WriteLine(" public " + type.FullName + " CreateInstance()");
-        //        sw.WriteLine("{");
-
-
-        //        string body = Generator.Instance.GenerateFromFile(sourceFile, type);
-        //        sw.Write(body);
-        //        sw.WriteLine("; return document;");
-        //        sw.WriteLine("}");
-        //        sw.WriteLine("} //end of class");
-        //        sw.WriteLine("} //end of namespace");
-        //    }
-        //    else
-        //    {
-        //        sw.WriteLine("//  UnitTest class ");
-        //        sw.WriteLine("// type " + task.TypeName + "NOT FOUND");
-        //    }
-        //    sw.Close();
-        //    sw.Dispose();
-        //}
     }
 }

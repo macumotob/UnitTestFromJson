@@ -8,20 +8,16 @@ namespace UnitTestGenerator
 {
     class JsonParser
     {
-        private void _skipws(string s,ref int i)
+        private void _skipws(string s, ref int i)
         {
-            while(i < s.Length && (s[i] == ' ' || s[i] == '\r' ||  s[i] == '\n' || s[i] == '\t'))
+            while (i < s.Length && (s[i] == ' ' || s[i] == '\r' || s[i] == '\n' || s[i] == '\t'))
             {
                 i++;
             }
-            //if(i >= s.Length)
-            //{
-            //    throw new NotImplementedException();
-            //}
         }
-        private string _readName(string s,ref int i )
+        private string _readName(string s, ref int i)
         {
-            if( i < s.Length &&  s[i] == '"')
+            if (i < s.Length && s[i] == '"')
             {
                 string name = "";
                 i++;
@@ -32,20 +28,20 @@ namespace UnitTestGenerator
                 if (i < s.Length && s[i] == '"')
                 {
                     i++;
-                    return name; 
+                    return name;
                 }
 
             }
             throw new NotImplementedException();
         }
-        private object _readObject(string s,ref int i)
+        private object _readObject(string s, ref int i)
         {
-            if(s[i] != '{')
+            if (s[i] != '{')
             {
                 throw new NotImplementedException();
             }
             i++;
-            Dictionary<string, object> dic= new Dictionary<string, object>();
+            Dictionary<string, object> dic = new Dictionary<string, object>();
             string name = null;
             object value = null;
             while (i < s.Length)
@@ -87,7 +83,7 @@ namespace UnitTestGenerator
         private object _readArray(string s, ref int i)
         {
             List<object> list = new List<object>();
-            if(i < s.Length && s[i] != '[')
+            if (i < s.Length && s[i] != '[')
             {
                 throw new NotImplementedException();
             }
@@ -113,33 +109,33 @@ namespace UnitTestGenerator
                     break;
             }
             _skipws(s, ref i);
-            if(i < s.Length && s[i] == ']')
+            if (i < s.Length && s[i] == ']')
             {
                 i++;
                 return list;
             }
-            if( i < s.Length &&  s[i] == ',')
+            if (i < s.Length && s[i] == ',')
             {
                 goto label_value;
             }
             throw new NotImplementedException();
-            
+
         }
         private object _readValue(string s, ref int i)
         {
-            if(i < s.Length)
+            if (i < s.Length)
             {
                 char c = s[i];
 
-                if(s[i] == '"')
+                if (s[i] == '"')
                 {
                     return _readName(s, ref i);
                 }
-                if(s[i] == '{')
+                if (s[i] == '{')
                 {
                     return _readObject(s, ref i);
                 }
-                if(s[i] == '[')
+                if (s[i] == '[')
                 {
                     object array = _readArray(s, ref i);
                     return array;
